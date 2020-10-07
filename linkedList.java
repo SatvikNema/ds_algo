@@ -16,32 +16,53 @@ class Result{
 	}
 }
 
+class LinkedList{
+	node head;
+	node end;
+	LinkedList(){
+		head=null;
+		end=null;
+	}
+	LinkedList(node a){
+		head=a;
+		end=a;
+	}
+	LinkedList(int a){
+		node temp=new node(a);
+		head=temp;
+		end=temp;
+	}
+
+}
+
 class satvik{
 	public static void main(String args[]){
-		node data1 = null;
-		data1 = insertEnd(data1, 1);
-		data1 = insertEnd(data1, 3);
-		data1 = insertEnd(data1, 5);
-		data1 = insertEnd(data1, 8);
-		data1 = insertEnd(data1, 9);
-		data1 = insertEnd(data1, 11);
-		data1 = insertEnd(data1, 15);
+		LinkedList data1=new LinkedList()
+		insertEnd(data1, 1);
+		insertEnd(data1, 3);
+		insertEnd(data1, 5);
+		insertEnd(data1, 8);
+		insertEnd(data1, 9);
+		insertEnd(data1, 11);
+		insertEnd(data1, 15);
 
-		node data2 = null;
-		data2 = insertEnd(data2, 2);
-		data2 = insertEnd(data2, 4);
-		data2 = insertEnd(data2, 6);
-		data2 = insertEnd(data2, 7);
-		data2 = insertEnd(data2, 12);
-		data2 = insertEnd(data2, 16);
-		data2 = insertEnd(data2, 20);
+		LinkedList data2=new LinkedList(5);
+		insertEnd(data2, 2);
+		insertEnd(data2, 4);
+		insertEnd(data2, 6);
+		insertEnd(data2, 7);
+		insertEnd(data2, 12);
+		insertEnd(data2, 16);
+		insertEnd(data2, 20);
 
 		node m = mergeSorted(data1, data2);
 		printList(m);		
 	}
 
 	//Merging two sorted linked lists
-	public static node mergeSorted(node a, node b){
+	public static node mergeSorted(LinkedList l1, LinkedList l2){
+		a=l1.head;
+		b=l2.head;
 		node n1 = a, n2 = b, res = new node(-1);
 		node temp = res;
 		while(n1!=null && n2!=null){
@@ -63,7 +84,8 @@ class satvik{
 		}
 		return res.next;
 	}
-	public static boolean isPalindrome(node a){
+	public static boolean isPalindrome(LinkedList l){
+		node a=l.head;
 		int len = 0;
 		node temp = a;
 		while(temp!=null){
@@ -90,12 +112,16 @@ class satvik{
 	}
 
 	//Adding number using linked list
-	public static node addStraight(node a, node b){
+	public static node addStraight(LinkedList l1, LinkedList l2){
+		a=l1.head;
+		b=l2.head;
 		listRev(a);
 		listRev(b);
 		return addReverse(a,b);
 	}
-	public static node addReverse(node l1, node l2){
+	public static node addReverse(LinkedList a, LinkedList b){
+		node l1=a.head;
+		node l2=b.head;
 		node ans = new node(0);
         node a = l1, b = l2, res = ans;
         int sum, carry = 0;
@@ -146,20 +172,12 @@ class satvik{
 	}
 
 	//UTILITY FUNCTIONS
-	public static node insertEnd(node head, int data){
-		if(head==null){
-			head = new node(data);
-		}else{
-			node temp = head;
-			while(temp.next!=null){
-
-				temp = temp.next;
-			}
-			temp.next = new node(data);
-		}
-		return head;
+	public static node insertEnd(LinkedList l, int data){
+		l.end.next=new node(data);
+		l.end=l.end.next;
 	}
-	public static node insertAtIndex(node head, int data, int index){
+	public static void insertAtIndex(LinkedList l, int data, int index){
+		node head=l.head;
 		node tempNewNode = new node(data);
 		node temp = head;
 		if(index==0){
@@ -175,9 +193,11 @@ class satvik{
 			temp.next = tempNewNode;
 			tempNewNode.next = tempHold;
 		}
-		return head;
+		l.head=head;
+		
 	}
-	public static node push(node head, int data){		
+	public static void push(LinkedList l, int data){		
+		node head=l.head;
 		if(head==null){
 			head = new node(data);
 		}else{
@@ -185,7 +205,16 @@ class satvik{
 			front.next = head;
 			head = front;
 		}
-		return head;
+		l.head= head;
+	}
+	public static void printList(LinkedList l){
+		node head=l.head;
+		node temp = head;
+		while(temp!=null){
+			System.out.print(temp.data+"->");
+			temp = temp.next;
+		}
+		System.out.println();
 	}
 	public static void printList(node head){
 		node temp = head;
@@ -195,7 +224,8 @@ class satvik{
 		}
 		System.out.println();
 	}
-	public static void deleteNode(node head, int index){
+	public static void deleteNode(LinkedList l, int index){
+		node head=l.head;
 		if(index==0){
 			head = head.next;
 		}else{
@@ -204,11 +234,13 @@ class satvik{
 				temp = temp.next;
 			}
 			temp.next = temp.next.next;
-		}	
+		}
+		l.head=head;	
 	}
 
 	//removes the second occuring of an element
-	public static void removeDup(node head){
+	public static void removeDup(LinkedList l){
+		node head=l.head;
 		node temp = head;
 		int min=temp.data, max = temp.data;
 		int curr;
@@ -243,7 +275,8 @@ class satvik{
 		}
 		System.out.print(head.data+"->");
 	}
-	public static void listRev(node head){
+	public static void listRev(LinkedList l){
+		head=l.head;
 		node curr = head;
 		node prev = null, agla = null;
 		while(curr!=null){
@@ -254,7 +287,8 @@ class satvik{
 		}
 		head = prev;
 	}
-	public static void printLastKth(node head, int k){
+	public static void printLastKth(LinkedList l, int k){
+		node head=l.head;
 		node a=head, b=head;
 		int i = 0;
 		while(i<k){
@@ -268,7 +302,8 @@ class satvik{
 		System.out.println(b.data);
 	}
 
-	public static void deleteMid(node head){
+	public static void deleteMid(LinkedList l){
+		node head=l.head;
 		node a=head, b=head;
 		int indexToDelete = 0;
 		while(a!=null && b!=null && b.next!=null){
